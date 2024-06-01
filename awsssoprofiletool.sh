@@ -240,13 +240,16 @@ do
 	done
 	echo -n "Creating $profilename... "
 	echo "" >> "$profilefile"
-	echo "[profile $profilename]" >> "$profilefile"
+	echo "[profile $acctname]" >> "$profilefile"
 	echo "sso_start_url = $2" >> "$profilefile"
 	echo "sso_region = $1" >> "$profilefile"
 	echo "sso_account_id = $acctnum" >> "$profilefile"
 	echo "sso_role_name = $rolename" >> "$profilefile"
 	echo "region = $awsregion" >> "$profilefile"
 	echo "output = $output" >> "$profilefile"
+	echo "" >> "$profilefile"
+	echo "[profile ${acctname}-wrapped]" >> "$profilefile"
+	echo "credential_process = aws2-wrap --process --profile $acctname" >> "$profilefile"
 	echo "Succeeded"
 	created_profiles+=("$profilename")
     done < "$rolesfile"
